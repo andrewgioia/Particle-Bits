@@ -1,0 +1,237 @@
+# NGiNX + uWSGI deployment for Django with virtualenv
+#
+# See http://senya.pl/2011/03/sexy-nginx-uwsgi-stack-for-django-with-virtualenv/
+# for more information
+#
+
+# 0. Prerequisites
+#
+sudo -s
+sudo apt-get update && sudo apt-get install build-essential
+sudo aptitude install python
+sudo apt-get install python-all python-all-dev
+
+# 1. uWSGI
+#
+mkdir /usr/src/uwsgi
+cd /usr/src/uwsgi
+wget http://projects.unbit.it/downloads/uwsgi-0.9.6.8.tar.gz
+tar xfz uwsgi-0.9.6.8.tar.gz
+cd uwsgi-0.9.6.8
+make
+cp ./uwsgi /usr/local/sbin/
+nano /etc/init/uwsgi.conf
+  # paste in the following file contents
+  #
+  # /etc/init/uwsgi.conf
+  description "uWSGI server"
+
+  start on (local-filesystems and runlevel [2345])
+  stop on runlevel [016]
+
+  respawn
+
+  exec /usr/local/sbin/uwsgi \
+  --uid www-data \
+  --socket 127.0.0.1:5050 \
+  --master \
+  --logto /var/log/uwsgi_main.log \
+  --logdate \
+  --optimize 2 \
+  --processes 2 \
+  --harakiri 120 \
+  --vhost \
+  --no-site
+
+# 2. NGiNX
+#
+aptitude install libpcre3-dev libpcrecpp0 libssl-dev zlib1g-dev libgeoip-dev
+mkdir /usr/src/nginx
+cd /usr/src/nginx
+wget http://nginx.org/download/nginx-0.8.54.tar.gz
+tar xfz nginx-0.8.54.tar.gz
+cd nginx-0.8.54/
+
+./configure --pid-path=/var/run/nginx.pid \
+--conf-path=/etc/nginx/nginx.conf \
+--sbin-path=/usr/local/sbin \
+--user=www-data \
+--group=www-data \
+--http-log-path=/var/log/nginx/access.log \
+--error-log-path=/var/log/nginx/error.log \
+--with-http_stub_status_module \
+--with-ipv6 \
+--with-http_ssl_module \
+--with-http_realip_module \
+--with-sha1-asm \
+--with-sha1=/usr/lib \
+--http-fastcgi-temp-path=/var/tmp/nginx/fcgi/ \
+--http-proxy-temp-path=/var/tmp/nginx/proxy/ \
+--http-client-body-temp-path=/var/tmp/nginx/client/ \
+--with-http_geoip_module \
+--with-http_gzip_static_module \
+--with-http_sub_module \
+--with-http_addition_module \
+--with-file-aio \
+--without-mail_smtp_module
+
+make && make install
+mkdir /var/tmp/nginx
+chown www-data /var/tmp/nginx
+
+nano /etc/init/nginx.conf
+  # paste into the file
+  #
+  # /etc/init/nginx.conf
+  description "NGiNX starter"
+  
+  start on (local-filesystems and runlevel [2345])
+  stop on runlevel [016]
+  
+  respawn
+  
+  exec /usr/local/sbin/nginx
+
+cd /etc/nginx
+mkdir sites-available sites-disabled sites-enabled
+nano backends.conf
+  # paste this into backends.conf
+  #
+  upstream uwsgi_main {
+    server 127.0.0.1:5050;
+  }
+nano nginx.conf
+  # add these lines before the last }
+  #
+  include /etc/nginx/backends.conf;
+  include /etc/nginx/sites-enabled/*;
+cd sites-available/
+nano particlebits.com
+  # paste into the file
+  #
+  server {
+    listen 80;
+    server_name .particlebits.com;
+    set $home /particlebits/pydocs;
+    access_log /particlebits/logs/nginx/access.log;
+    error_log /particlebits/logs/nginx/error.log;
+    client_max_body_size 10m;
+    keepalive_timeout 120;
+
+    location / {
+      uwsgi_pass uwsgi_main;
+      include uwsgi_params;
+      uwsgi_param UWSGI_CHDIR $home/deploy;
+      uwsgi_param UWSGI_SCRIPT deploy;
+      uwsgi_param UWSGI_PYHOME $home/env;
+      root $home;
+    }
+    
+    location /media/ {
+      root $home;
+      autoindex on;
+      error_page 404 = "404";
+    }
+  }
+ln -s /etc/nginx/sites-available/particlebits.com /etc/nginx/sites-enabled/particlebits.com
+cd /
+mkdir particlebits
+cd particlebits
+mkdir pydocs logs logs/nginx
+chmod -R 777 logs
+chmod -R 755 pydocs
+chown www-data logs
+chown www-data pydocs
+chgrp www-data logs
+chgrp www-data pydocs
+
+# 3. virtualenv
+#
+sudo aptitude install python-virtualenv
+cd /particlebits/pydocs
+virtualenv --no-site-packages env
+virtualenv --relocatable env
+
+# 4. Django
+#
+cd /particlebits/pydocs
+. env/bin/activate
+mkdir env/src
+wget -O env/src/django.tgz http://www.djangoproject.com/download/1.3/tarball/
+cd env/src
+tar xfz django.tgz
+cd Django-1.3
+python setup.py install
+
+# 5. Application configuration
+#
+cd /particlebits/pydocs
+. env/bin/activate
+django-admin.py startproject pro
+mv pro/* .
+rm -rf pro
+sed -i "s/pro\.urls/urls/g" settings.py
+
+mkdir media
+cp -R env/lib/python2.6/site-packages/django/contrib/admin/media/* media/
+
+mkdir deploy
+nano deploy/deploy.py
+  # add the following to the file
+  #
+  import sys
+  import site
+  import os
+
+  envpath = '/particlebits/pydocs/env/lib/python2.6/site-packages'
+  prev_sys_path = list(sys.path)
+  site.addsitedir(envpath)
+  sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
+
+  new_sys_path = [p for p in sys.path if p not in prev_sys_path]
+  for item in new_sys_path:
+  sys.path.remove(item)
+  sys.path[:0] = new_sys_path
+  from django.core.handlers.wsgi import WSGIHandler
+  os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+  application = WSGIHandler()
+chmod +x deploy/deploy.py
+
+# 6. Starting the application
+#
+cd /particlebits/pydocs
+python deploy/deploy.py
+start nginx
+start uwsgi
+
+# 7. PostgreSQL
+#
+sudo apt-get install postgresql pgadmin3 python-psycopg2
+sudo su -
+passwd postgres #meanj
+su postgres
+psql template1
+ALTER USER postgres WITH ENCRYPTED PASSWORD 'meanj';
+sudo -u postgres createuser -P particlebits
+sudo -u postgres createuser -P django_login #don't give any super user rights
+su postgres
+psql template1
+CREATE DATABASE django_db OWNER django_login ENCODING 'UTF8';
+nano /etc/postgresql/8.4/main/pg_hba.conf
+  # copy the following into the file
+  #
+  local   all         postgres            ident sameuser
+  local   all         particlebits        ident sameuser
+  local   django_db   django_login        md5
+
+
+# 8. Set up settings.py for Django and syncdb
+#
+ln -s env/lib/python2.6/site-packages/django ./django
+python manage.py syncdb
+  # create the super user if you want to
+  # if not, run the following commands to create a super user
+  # (make sure the admin module is installed in settings.py)
+  #
+  python manage.py createsuperuser
+
