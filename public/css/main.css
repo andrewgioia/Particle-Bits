@@ -5,6 +5,7 @@ html {
 	}
 	
 body {
+	color: #333;
 	font-family: "Lucida Grande", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	height: 100%;
@@ -14,13 +15,19 @@ body {
 	}
 
 h1 {
-	font-family: "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif;
+	font-family: "Crimson Text", "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif;
+	font-size: 36px;
 	font-weight: normal;
+	line-height: 1em;
+	margin: 0;
+	padding: 0;
 	}
 
 header {
+	border-top: 5px solid #282828;
 	border-right: 1px solid #eee;
 	height: 100%;
+	position: fixed;
 	width: 20%;	
 	}
 	
@@ -29,7 +36,7 @@ header {
 		text-align: right;
 		}
 	
-	#plate {
+	#old {
 		background: #333;
 		border: 1px solid #000;
 		-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; 
@@ -39,10 +46,79 @@ header {
 		width: 60px;
 		}
 	
+	#box {
+		background-color: #1F6CBC;
+		background-image: -moz-linear-gradient(100% 100% 90deg, #013F80, #41A0FF );
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#41A0FF), to(#013F80));
+		-moz-box-shadow: 0 1px 10px #999; -webkit-box-shadow: 0 1px 10px #999; box-shadow: 0 1px 10px #999;
+		-mox-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px;
+		color: #282828;
+		float: right;
+		font: normal bold 48px Arial, Verdana, Tahoma, sans-serif;
+		font-variant: small-caps;
+		height: 65px;
+		letter-spacing: -2px;
+		margin: 0 0 0 0;
+		padding: 10px 5px 0 0;
+		text-align: center;
+		text-shadow: 1px 1px 1px #0987DE, -1px -1px 1px #000;
+		width: 70px;
+		}
+		
+	
+	#plate {
+		z-index: 10;
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		}
+
+		#plate span {
+			display: block;
+			float: right;
+			position: relative;
+			width: 120px;
+			height: 120px;
+			padding: 0;
+			margin: 0 20px 20px 0;
+			background: -webkit-gradient(radial, 60 30, 60, 60 20, 30, from(#555), to(#666)) #666;
+			-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30), 0 0 40px rgba(0, 0, 0, 0.08) inset;
+			-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30), 0 0 40px rgba(0, 0, 0, 0.08) inset; 
+			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.60), 0 0 40px rgba(0, 0, 0, 0.20) inset;
+			}
+
+		#plate span:before, #plate span:after {
+			content: '';
+			z-index: -1;
+			position: absolute;
+			left: 10px;
+			bottom: 10px;
+			width: 70%;
+			height: 55%;
+			-webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+			-webkit-transform: skew(-20deg) rotate(-10deg);
+			-moz-transform: skew(-20deg) rotate(-10deg);
+			-ms-transform: skew(-20deg) rotate(-10deg);
+			-o-transform: skew(-20deg) rotate(-10deg);
+			transform: skew(-20deg) rotate(-10deg);
+			}
+
+		#plate span:after {
+			left: auto;
+			right: 10px;
+			-webkit-transform: skew(20deg) rotate(10deg);
+			-moz-transform: skew(20deg) rotate(10deg);
+			-ms-transform: skew(20deg) rotate(10deg);
+			-o-transform: skew(20deg) rotate(10deg);
+			transform: skew(20deg) rotate(10deg);
+			}
+	
 	#pb {
 		color: #fff;		
-		font-size: 36px;
-		padding: 5px 7px 0 0;
+		font-size: 42px;
+		padding: 30px 7px 0 0;
 		text-shadow: 0 1px 0 #000;
 		}
 	
@@ -58,7 +134,20 @@ nav {
 		}
 
 	nav ul li {
-		padding: 0 8px 7px 0;
+		font-size: 14px;
+		padding: 0 0 7px 0;
+		}
+		
+#main {
+	margin: 0 0 0 20%;
+	padding: 0;
+	width: 70%;
+	}
+	
+	#main #lead {
+		border-top: 5px solid #1f6cbc;
+		padding: 45px 0 0 50px;
+		text-shadow: 0 1px 0 #ddd;
 		}
 
 .clear { clear: both; }
