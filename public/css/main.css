@@ -1,3 +1,16 @@
+/**
+ * PALLETTE
+ *
+ * Gray:	#B0B9CE;
+ * Pink:	#FF8080;
+ * Teal:	#008080;
+ * Blue:	#206080;
+ * Purple:	#602080;
+ * Dark:	#282828;
+ * Sand:	#D2CAB9;
+ *
+ */
+
 html {
 	height: 100%;
 	margin: 0;
@@ -7,7 +20,7 @@ html {
 body {
 	color: #333;
 	font-family: "Lucida Grande", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 15px;
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -23,10 +36,26 @@ h1 {
 	padding: 0;
 	}
 
+a {
+	border-bottom: 1px solid #206080;
+	color: #206080;
+	text-decoration: none;
+	}
+
+#top {
+	background: #d74a4a;
+	border-bottom: 2px solid #FF8080;
+	height: 1px;
+	position: fixed;
+	width: 100%;
+	z-index: 5;
+	}
+
 header {
 	height: 100%;
 	position: fixed;
 	width: 20%;
+	z-index: 10;
 	}
 	
 	#logo {
@@ -120,18 +149,13 @@ nav {
 		}
 
 	nav ul li {
-		font-size: 14px;
 		padding: 0 0 7px 0;
 		}
-
-#top {
-	background: #d74a4a;
-	border-bottom: 2px solid #FF8080;
-	height: 1px;
-	position: fixed;
-	width: 100%;
-	z-index: -1;
-	}
+	
+	nav a {
+		border: none;
+		text-shadow: 0 1px 0 #eee;
+		}
 		
 #main {
 	margin: 0 0 0 20%;
@@ -142,7 +166,7 @@ nav {
 	#main #lead {
 		/*border-top: 5px solid #1f6cbc;*/
 		padding: 42px 0 35px 0;
-		text-shadow: 0 1px 0 #ddd;
+		text-shadow: 0 1px 0 #D2CAB9;
 		}
 
 	#main article {
@@ -158,7 +182,7 @@ nav {
 	#main article h2 {
 		font-size: 24px;
 		margin: 5px 0 15px;
-		text-shadow: 0 1px 0 #ddd;
+		text-shadow: 0 1px 0 #D2CAB9;
 		text-transform: uppercase;
 		}
 	
