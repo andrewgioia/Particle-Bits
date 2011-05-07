@@ -7,7 +7,7 @@ html {
 body {
 	color: #333;
 	font-family: "Lucida Grande", "Lucida Sans", Geneva, Arial, Helvetica, sans-serif;
-	font-size: 13px;
+	font-size: 14px;
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -16,7 +16,7 @@ body {
 
 h1 {
 	font-family: "Crimson Text", "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif;
-	font-size: 36px;
+	font-size: 40px;
 	font-weight: normal;
 	line-height: 1em;
 	margin: 0;
@@ -24,15 +24,13 @@ h1 {
 	}
 
 header {
-	border-top: 5px solid #282828;
-	border-right: 1px solid #eee;
 	height: 100%;
 	position: fixed;
-	width: 20%;	
+	width: 20%;
 	}
 	
 	#logo {
-		padding: 50px 20% 0 0;
+		padding: 0 20% 0 0;
 		text-align: right;
 		}
 	
@@ -64,56 +62,44 @@ header {
 		text-shadow: 1px 1px 1px #0987DE, -1px -1px 1px #000;
 		width: 70px;
 		}
-		
 	
-	#plate {
-		z-index: 10;
-		overflow: hidden;
-		margin: 0;
-		padding: 0;
+	#drop {
+		background-color: #1F6CBC;
+		background-image: -moz-linear-gradient(100% 100% 90deg, #013F80, #41A0FF );
+		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2e8bb8), to(#206080));
+		border: 1px solid #013F80;
+		border-top: none;
+		-moz-box-shadow: 0 1px 10px #999; -webkit-box-shadow: 0 0 10px #BCEFFF; box-shadow: 0 0 15px #5bd7ff, inset -1px -1px 0 #93c9ff, inset 1px 0 0 #93c9ff;
+		-mox-border-radius: 0 0 5px 5px; -webkit-border-radius: 0 0 5px 5px; border-radius: 0 0 5px 5px;
+		color: #282828;
+		float: right;
+		font-size: 48px;
+		font-weight: bold;
+		height: 65px;
+		padding: 55px 10px 0 0;
+		text-shadow: 1px 1px 1px #57b8f9, -1px -1px 1px #000;
+		width: 75px;
+		}
+		
+		#drop:hover {
+			padding-top: 57px;
+			margin-bottom: -2px;
 		}
 
-		#plate span {
-			display: block;
-			float: right;
-			position: relative;
-			width: 120px;
-			height: 120px;
-			padding: 0;
-			margin: 0 20px 20px 0;
-			background: -webkit-gradient(radial, 60 30, 60, 60 20, 30, from(#555), to(#666)) #666;
-			-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30), 0 0 40px rgba(0, 0, 0, 0.08) inset;
-			-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.30), 0 0 40px rgba(0, 0, 0, 0.08) inset; 
-			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.60), 0 0 40px rgba(0, 0, 0, 0.20) inset;
-			}
-
-		#plate span:before, #plate span:after {
-			content: '';
-			z-index: -1;
-			position: absolute;
-			left: 10px;
-			bottom: 10px;
-			width: 70%;
-			height: 55%;
-			-webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-			-moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-			-webkit-transform: skew(-20deg) rotate(-10deg);
-			-moz-transform: skew(-20deg) rotate(-10deg);
-			-ms-transform: skew(-20deg) rotate(-10deg);
-			-o-transform: skew(-20deg) rotate(-10deg);
-			transform: skew(-20deg) rotate(-10deg);
-			}
-
-		#plate span:after {
-			left: auto;
-			right: 10px;
-			-webkit-transform: skew(20deg) rotate(10deg);
-			-moz-transform: skew(20deg) rotate(10deg);
-			-ms-transform: skew(20deg) rotate(10deg);
-			-o-transform: skew(20deg) rotate(10deg);
-			transform: skew(20deg) rotate(10deg);
-			}
+	/*#drop:after {
+		background: none;
+		content:'';
+		border-radius: 6px 0 0 0;
+		border-radius: 6px 0 0 0;
+		border: 1px solid #000;
+		border-width: 1px 0 0 1px;
+		width: 6px;
+		height: 6px;
+		display: block;
+		position: absolute;
+		margin: -112px 0 0 85px;
+		}
+	*/
 	
 	#pb {
 		color: #fff;		
@@ -137,17 +123,47 @@ nav {
 		font-size: 14px;
 		padding: 0 0 7px 0;
 		}
+
+#top {
+	background: #013F80;
+	height: 1px;
+	position: fixed;
+	width: 100%;
+	z-index: -1;
+	}
 		
 #main {
 	margin: 0 0 0 20%;
-	padding: 0;
-	width: 70%;
 	}
-	
+
+	#main #lead, #main article { width: 80%; max-width: 900px; }
+
 	#main #lead {
-		border-top: 5px solid #1f6cbc;
-		padding: 45px 0 0 50px;
+		/*border-top: 5px solid #1f6cbc;*/
+		padding: 42px 0 35px 0;
 		text-shadow: 0 1px 0 #ddd;
 		}
 
+	#main article {
+		padding: 0 0 20px;
+		}
+
+	#main article p {
+		line-height: 1.7em;
+		margin: 0;
+		padding: 0 0 15px;
+		}
+
+	#main article h2 {
+		font-size: 24px;
+		margin: 5px 0 15px;
+		text-shadow: 0 1px 0 #ddd;
+		text-transform: uppercase;
+		}
+	
+	#main article h2.green { color: #008080; }
+	#main article h2.purple { color: #602080; }
+
 .clear { clear: both; }
+.serif { font-family: "Crimson Text", "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif; }
+.end { font-weight: bold; }
