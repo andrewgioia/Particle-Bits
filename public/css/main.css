@@ -125,7 +125,8 @@ nav {
 		}
 
 #top {
-	background: #013F80;
+	background: #d74a4a;
+	border-bottom: 2px solid #FF8080;
 	height: 1px;
 	position: fixed;
 	width: 100%;
