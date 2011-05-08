@@ -28,10 +28,10 @@ body {
 	}
 
 h1 {
-	font-family: "Crimson Text", "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif;
-	font-size: 40px;
+	font-family: "Droid Serif", "Crimson Text", "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif;
+	font-size: 36px;
 	font-weight: normal;
-	line-height: 1em;
+	line-height: 1.1em;
 	margin: 0;
 	padding: 0;
 	}
@@ -41,14 +41,19 @@ a {
 	color: #206080;
 	text-decoration: none;
 	}
+	
+a:hover {
+	color: #13384a;
+	}
 
 #top {
-	background: #d74a4a;
-	border-bottom: 2px solid #FF8080;
+	background: #ff9393;
+	border-top: 1px solid #d74a4a;
+	border-bottom: 3px solid #FF8080;
 	height: 1px;
 	position: fixed;
 	width: 100%;
-	z-index: 5;
+	z-index: 10;
 	}
 
 header {
@@ -93,14 +98,13 @@ header {
 		}
 	
 	#drop {
-		background-color: #1F6CBC;
-		background-image: -moz-linear-gradient(100% 100% 90deg, #013F80, #41A0FF );
+		background-color: #2e8bb8;
+		background-image: -moz-linear-gradient(100% 100% 90deg, #2e8bb8, #206080 );
 		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2e8bb8), to(#206080));
 		border: 1px solid #013F80;
 		border-top: none;
 		-moz-box-shadow: 0 1px 10px #999; -webkit-box-shadow: 0 0 10px #BCEFFF; box-shadow: 0 0 15px #5bd7ff, inset -1px -1px 0 #93c9ff, inset 1px 0 0 #93c9ff;
 		-mox-border-radius: 0 0 5px 5px; -webkit-border-radius: 0 0 5px 5px; border-radius: 0 0 5px 5px;
-		color: #282828;
 		float: right;
 		font-size: 48px;
 		font-weight: bold;
@@ -114,6 +118,10 @@ header {
 			padding-top: 57px;
 			margin-bottom: -2px;
 		}
+		
+		#drop a {
+			color: #282828;
+			}
 
 	/*#drop:after {
 		background: none;
@@ -161,34 +169,120 @@ nav {
 	margin: 0 0 0 20%;
 	}
 
-	#main #lead, #main article { width: 80%; max-width: 900px; }
+	#main #lead, #main article { width: 90%; }
 
 	#main #lead {
 		/*border-top: 5px solid #1f6cbc;*/
-		padding: 42px 0 35px 0;
+		padding: 45px 0 40px;
 		text-shadow: 0 1px 0 #D2CAB9;
+		}
+	
+	#main #lead h1 {
+		padding-right: 200px;
 		}
 
 	#main article {
 		padding: 0 0 20px;
 		}
 
+	#main article .extra {
+		background: #fff;
+		border-bottom: 1px solid #dbdde3;
+		color: #a9abb1;
+		float: right;
+		font-size: 13px;
+		padding: 5px 0;
+		text-align: right;
+		width: 180px;
+		z-index: 5;
+		}
+		
+		#main article .extra a {
+			border: none;
+			}
+			
+	#main article .info {
+		clear: right;
+		color: #a9abb1;
+		float: right;
+		font-size: 13px;
+		line-height: 1.6em;
+		padding: 10px 0;
+		text-align: right;
+		width: 180px;
+		}
+	
 	#main article p {
 		line-height: 1.7em;
-		margin: 0;
+		margin: 0 200px 0 0;
 		padding: 0 0 15px;
 		}
 
 	#main article h2 {
 		font-size: 24px;
 		margin: 5px 0 15px;
-		text-shadow: 0 1px 0 #D2CAB9;
-		text-transform: uppercase;
+		text-shadow: 0 1px 0 #e7e2da;
+		}
+	
+	.icon {
+		display: block;
+		float: right;
+		position: relative;
+		z-index: 1;
+		overflow: hidden;
+		width: 20px;
+		}
+		
+	.icon::before {
+		z-index: 10;
+		left: 6px;
+		width: 14px;
+		height: 10px;
+		border-width: 0 1px 1px 0;
+		border-style: solid;
+		border-color: #fff;
+		margin: -13px 0 0 0;
+		background: transparent;
+		-webkit-transform: rotate(39deg) skew(-12deg);
+		-moz-transform: rotate(39deg) skew(-12deg);
+		-o-transform: rotate(39deg) skew(-12deg);
+		transform: rotate(39deg) skew(-12deg);
+		}
+	
+	.icon a { border: none; }
+	
+	.icon::before, .icon::after, .icon a::before, .icon a::after  {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+		}
+	
+	.icon a::before {
+		left: 0;
+		width: 6px;
+		border-width: 6px;
+		border-style: solid;
+		border-color: #c0c0c0 #c0c0c0 transparent;
+		background: transparent;
+		margin: -8px 0 0;
+		background: #c0c0c0;
+		}
+		
+	.icon a::after {
+		left: 0;
+		border-width: 0 8px 9px;
+		border-style: solid;
+		border-color: #c0c0c0 transparent;
+		margin-top: -5px;
+		background: transparent;
 		}
 	
 	#main article h2.green { color: #008080; }
 	#main article h2.purple { color: #602080; }
+	#main article h2.blue { color: #206080; }
 
 .clear { clear: both; }
-.serif { font-family: "Crimson Text", "Merriweather", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif; }
+.hide { display: none; }
+.serif { font-family: "Droid Serif", "Crimson Text", "Hoefler Text", Baskerville, Georgia, "Palatino Linotype", Garamond, "Times New Roman", serif; }
 .end { font-weight: bold; }
